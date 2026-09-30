@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.IoTBackend.IoT_Backend.model.HumidityAndTemperature;
+import com.IoTBackend.IoT_Backend.model.MeasurementStatistics;
 import com.IoTBackend.IoT_Backend.service.HumidityAndTemperatureService;
 
 @RestController
@@ -48,5 +49,17 @@ public class HumidityAndTemperatureController {
         LocalDateTime end = date.plusDays(1).atStartOfDay();// Returnerar LocalDateTime vid midnatt för nästa dag
 
         return ResponseEntity.ok(service.getMeasurementsForDay(start, end));
+    }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<MeasurementStatistics> getStatisticsForDay(@RequestParam LocalDate date) {
+
+        MeasurementStatistics statistics = service.getStatisticsForDay(date);
+
+        if (statistics == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(statistics);
     }
 }
