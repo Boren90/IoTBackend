@@ -28,4 +28,9 @@ public class HumidityAndTemperatureService {
 
         return repository.findAll();
     }
+
+    public List<HumidityAndTemperature> getMeasurementsForDay(LocalDateTime start, LocalDateTime end) {
+
+    return repository.findByTimestampBetween(start, end);
+}
 }
